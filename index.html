@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GifTastic</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="icon" type="image/png" href="assets/images/favicon.jpg" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron text-center">
+        <h1 class="display-4">Employee Data Management</h1>
+        <p class="lead">
+          A comprehensive Directory Of Employee Billable hours
+        </p>
+      </div>
+
+      <div class="employee-box">
+        <h5 class="employee-header">Current Employees</h5>
+        <div class="employee-body">
+          <table class="table table-hover table-responsive-md employee-table">
+            <thead>
+              <tr>
+                <th scope="col">Employee Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Months Worked</th>
+                <th scope="col">Monthly rate ($)</th>
+                <th scope="col">Totally Billed ($)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="employee-box">
+        <h5 class="employee-header">Add Employee</h5>
+        <div class="employee-body">
+          <form id="add-employee">
+            <div class="form-group">
+              <label for="employeeName">Employee Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="employeeName"
+                placeholder="Employee Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="role">Role</label>
+              <input
+                type="text"
+                class="form-control"
+                id="role"
+                placeholder="Role"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="startDate">Start Date (MM/DD/YYYY)</label>
+              <input
+                class="form-control"
+                type="date"
+                value="2011-08-19"
+                id="startDate"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="rate">Monthly Rate</label>
+              <input
+                type="number"
+                class="form-control"
+                id="rate"
+                placeholder="2000"
+                required
+              />
+            </div>
+            <div class="text-lg-right">
+              <button type="submit" class="btn btn-primary">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- js scripts -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <!-- js scripts  -->
+  </body>
+</html>

@@ -1,0 +1,41 @@
+/* styles */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4aaaa5;
+  border: 2px solid #4aaaa5;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ccc;
+}
+
+/* start boostrap overrides */
+.jumbotron {
+  background-color: #111 !important;
+  color: #fff;
+}
+/* end boostrap overrides */
+
+/* start application styles */
+
+.employee-box {
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.employee-box .employee-header {
+  background-color: #dee2e675;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.employee-box .employee-body {
+  padding: 15px;
+}
+
+/* end application styles */
