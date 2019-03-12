@@ -10,38 +10,47 @@ $(document).ready(function() {
   };
   firebase.initializeApp(config);
 
-  // load data into employee table
+  // fetch employees data
   var getEmployees = function() {
     firebase
       .database()
       .ref('/employee/')
-      .once('value')
-      .then(function(snapshot) {
-        $.each(snapshot.val().new, function(i, value) {
-          var markup =
-            '<tr><td>' +
-            value.name +
-            '</td><td>' +
-            value.role +
-            '</td><td>' +
-            value.start_date +
-            '</td><td>' +
-            value.months_worked +
-            '</td><td>' +
-            value.rate +
-            '</td><td>' +
-            value.total_bill +
-            ' $' +
-            '</td></tr>';
+      .on(
+        'value',
+        function(snapshot) {
+          $('.employee-table tbody').empty();
 
-          $('.employee-table tbody').append(markup);
-        });
-      });
+          $.each(snapshot.val().new, function(i, value) {
+            var markup =
+              '<tr id="' +
+              i +
+              '"><td>' +
+              value.name +
+              '</td><td>' +
+              value.role +
+              '</td><td>' +
+              value.start_date +
+              '</td><td>' +
+              value.months_worked +
+              '</td><td>' +
+              value.rate +
+              '</td><td>' +
+              value.total_bill +
+              ' $' +
+              '</td><td><button class="btn btn-danger btn-xs delete" data-toggle="tooltip" data-title="Delete"><i class="far fa-trash-alt"></i></button></td></tr>';
+
+            $('.employee-table tbody').append(markup);
+          });
+        },
+        function(errorObject) {
+          console.log('The read failed: ' + errorObject.code);
+        }
+      );
   };
 
   getEmployees();
 
-  // add employee row to employee table
+  // add employee
   $('#add-employee').on('submit', function(e) {
     e.preventDefault();
 
@@ -67,34 +76,40 @@ $(document).ready(function() {
     firebase
       .database()
       .ref('/employee/new')
-      .push(newEmployee, function(error) {
-        if (error) {
-          console.log('error', error);
-
-          // The write failed...
-        } else {
-          // Data saved successfully!
-          console.log('data saved successfully!');
-        }
+      .push(newEmployee)
+      .then(function() {
+        $('#addEmployeeModal').modal('toggle');
+        $('#employeeName').val('');
+        $('#role').val('');
+        $('#startDate').val('');
+        $('#rate').val('');
+        console.log('add succeeded.');
+      })
+      .catch(function(error) {
+        console.log('add failed: ' + error.message);
       });
+  });
 
-    var markup =
-      '<tr><td>' +
-      name +
-      '</td><td>' +
-      role +
-      '</td><td>' +
-      date +
-      '</td><td>' +
-      monthsWorked +
-      '</td><td>' +
-      rate +
-      '</td><td>' +
-      totalBill +
-      ' $' +
-      '</td></tr>';
+  // delete employee
+  $(document).on('click', '.delete', function() {
+    var id = $(this)
+      .parents('tr')
+      .attr('id');
 
-    $('.employee-table tbody').append(markup);
+    var removeNode = $(this).parents('tr');
+
+    firebase
+      .database()
+      .ref('/employee/new')
+      .child(id)
+      .remove()
+      .then(function() {
+        removeNode.remove();
+        console.log('Remove succeeded.');
+      })
+      .catch(function(error) {
+        console.log('Remove failed: ' + error.message);
+      });
   });
 
   // get total billed

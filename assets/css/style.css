@@ -32,10 +32,32 @@
   background-color: #dee2e675;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  margin: 0;
+  align-items: center;
 }
 
 .employee-box .employee-body {
   padding: 15px;
+}
+
+.add-employee {
+  border: 1px solid #ccc !important;
+}
+
+.add-employee:hover {
+  background-color: #ccc;
+}
+
+.add-employee:focus {
+  box-shadow: none !important;
+}
+
+.add-employee .fa-plus {
+  color: #007bff;
+}
+
+.delete {
+  margin: 5px;
 }
 
 /* end application styles */
