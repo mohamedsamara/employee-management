@@ -44,7 +44,7 @@ $(document).ready(function() {
           });
         },
         function(errorObject) {
-          console.log('The read failed: ' + errorObject.code);
+          showNotifications(errorObject.code, 'danger');
         }
       );
   };
@@ -84,10 +84,10 @@ $(document).ready(function() {
         $('#role').val('');
         $('#startDate').val('');
         $('#rate').val('');
-        console.log('add succeeded.');
+        showNotification('Employee successfully added', 'success');
       })
       .catch(function(error) {
-        console.log('add failed: ' + error.message);
+        showNotification(error.message, 'danger');
       });
   });
 
@@ -159,7 +159,8 @@ $(document).ready(function() {
         .child(employeeId)
         .update(updatedEmployee)
         .then(function() {
-          console.log('update succeeded');
+          showNotification('Employee successfully updated', 'success');
+
           $('#editEmployeeModal').modal('toggle');
           $('#editEmployeeName').val('');
           $('#editRole').val('');
@@ -167,7 +168,7 @@ $(document).ready(function() {
           $('#editRate').val('');
         })
         .catch(function(error) {
-          console.log('update failed: ' + error.message);
+          showNotification(error.message, 'danger');
         });
     });
   });
@@ -184,12 +185,24 @@ $(document).ready(function() {
       .child(id)
       .remove()
       .then(function() {
-        console.log('Remove succeeded.');
+        showNotification('Employee successfully removed', 'success');
       })
       .catch(function(error) {
-        console.log('Remove failed: ' + error.message);
+        showNotification(error.message, 'danger');
       });
   });
+
+  // show notification
+  var showNotification = function(message, type) {
+    $('#message-alerts').html('<p>' + message + '</p>');
+    $('#message-alerts').addClass('alert alert-' + type);
+
+    $('#message-alerts')
+      .fadeTo(2000, 500)
+      .slideUp(500, function() {
+        $('#message-alerts').slideUp(500);
+      });
+  };
 
   // get total billed
   var getTotalBill = function(monthsWorked, rate) {
