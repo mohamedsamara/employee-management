@@ -24,7 +24,9 @@ $(document).ready(function() {
             var markup =
               '<tr id="' +
               i +
-              '"><td>' +
+              '"><td class="hidden">' +
+              i +
+              '</td><td>' +
               value.name +
               '</td><td>' +
               value.role +
@@ -36,8 +38,7 @@ $(document).ready(function() {
               value.rate +
               '</td><td>' +
               value.total_bill +
-              ' $' +
-              '</td><td><button class="btn btn-danger btn-xs delete" data-toggle="tooltip" data-title="Delete"><i class="far fa-trash-alt"></i></button></td></tr>';
+              '</td><td><button class="btn btn-danger btn-xs delete" data-title="Delete"><i class="far fa-trash-alt"></i></button><button class="btn btn-primary btn-xs edit" data-title="Edit"><i class="far fa-edit"></i></button></td></tr>';
 
             $('.employee-table tbody').append(markup);
           });
@@ -57,13 +58,13 @@ $(document).ready(function() {
     var name = $('#employeeName').val();
     var role = $('#role').val();
     var date = $('#startDate').val();
-    var formattedDate = new Date(date);
     var rate = $('#rate').val();
+    var formattedDate = new Date(date);
     var timeNow = new Date();
     var monthsWorked = getMonthsDifference(formattedDate, timeNow);
     var totalBill = getTotalBill(monthsWorked, rate);
 
-    // construct an object ready to be sent to database
+    // construct an object ready to be sent to the database
     var newEmployee = {
       name: name,
       role: role,
@@ -90,13 +91,92 @@ $(document).ready(function() {
       });
   });
 
+  // edit employee
+  $(document).on('click', '.edit', function() {
+    var employeeKeys = [
+      'id',
+      'name',
+      'role',
+      'start_date',
+      'months_worked',
+      'rate',
+      'total_bill'
+    ];
+
+    var employeeInputs = {
+      id: '',
+      name: '',
+      role: '',
+      start_date: '',
+      months_worked: 0,
+      rate: 0,
+      total_bill: 0
+    };
+
+    $('#editEmployeeModal').modal();
+
+    $(this)
+      .parents('tr')
+      .find('td:not(:last-child)')
+      .each(function(e) {
+        employeeInputs[employeeKeys[e]] = $(this).text();
+
+        $('#employeeId').val(employeeInputs.id);
+        $('#editEmployeeName').val(employeeInputs.name);
+        $('#editRole').val(employeeInputs.role);
+        $('#editStartDate').val(employeeInputs.start_date);
+        $('#editRate').val(employeeInputs.rate);
+      });
+
+    $('#edit-employee').on('submit', function(e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      var name = $('#editEmployeeName').val();
+      var role = $('#editRole').val();
+      var date = $('#editStartDate').val();
+      var rate = $('#editRate').val();
+      var formattedDate = new Date(date);
+      var timeNow = new Date();
+      var monthsWorked = getMonthsDifference(formattedDate, timeNow);
+      var totalBill = getTotalBill(monthsWorked, rate);
+
+      var employeeId = $('#employeeId').val();
+
+      // construct an object ready to be sent to the database
+      var updatedEmployee = {
+        name: name,
+        role: role,
+        start_date: date,
+        rate: rate,
+        months_worked: monthsWorked,
+        total_bill: totalBill
+      };
+
+      firebase
+        .database()
+        .ref('/employee/new')
+        .child(employeeId)
+        .update(updatedEmployee)
+        .then(function() {
+          console.log('update succeeded');
+          $('#editEmployeeModal').modal('toggle');
+          $('#editEmployeeName').val('');
+          $('#editRole').val('');
+          $('#editStartDate').val('');
+          $('#editRate').val('');
+        })
+        .catch(function(error) {
+          console.log('update failed: ' + error.message);
+        });
+    });
+  });
+
   // delete employee
   $(document).on('click', '.delete', function() {
     var id = $(this)
       .parents('tr')
       .attr('id');
-
-    var removeNode = $(this).parents('tr');
 
     firebase
       .database()
@@ -104,7 +184,6 @@ $(document).ready(function() {
       .child(id)
       .remove()
       .then(function() {
-        removeNode.remove();
         console.log('Remove succeeded.');
       })
       .catch(function(error) {

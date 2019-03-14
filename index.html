@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,6 +42,7 @@
           <table class="table table-hover table-responsive-md employee-table">
             <thead>
               <tr>
+                <th scope="col" class="hidden"></th>
                 <th scope="col">Employee Name</th>
                 <th scope="col">Role</th>
                 <th scope="col">Start Date</th>
@@ -55,7 +56,7 @@
         </div>
       </div>
 
-      <!-- Add Modal -->
+      <!-- Add Employee Modal -->
       <div
         class="modal fade text-left"
         id="addEmployeeModal"
@@ -123,6 +124,83 @@
                 <div class="text-lg-right">
                   <button type="submit" class="btn btn-primary">
                     Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Employee Modal -->
+      <div
+        class="modal fade text-left"
+        id="editEmployeeModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                Edit Employee
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="edit-employee">
+                <input type="hidden" id="employeeId" />
+                <div class="form-group">
+                  <label for="employeeName">Employee Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editEmployeeName"
+                    placeholder="Employee Name"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="role">Role</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editRole"
+                    placeholder="Role"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="startDate">Start Date (MM/DD/YYYY)</label>
+                  <input
+                    class="form-control"
+                    type="date"
+                    value="2011-08-19"
+                    id="editStartDate"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="rate">Monthly Rate</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editRate"
+                    placeholder="2000"
+                    required
+                  />
+                </div>
+                <div class="text-lg-right">
+                  <button type="submit" class="btn btn-primary">
+                    Update
                   </button>
                 </div>
               </form>
