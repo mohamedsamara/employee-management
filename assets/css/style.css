@@ -60,22 +60,6 @@
   margin: 5px;
 }
 
-.checkmark:focus {
-  box-shadow: none !important;
-}
-
-.checkmark .fa-check {
-  color: green;
-}
-
-.checkmark .fa-check:hover {
-  color: #12f112d1;
-}
-
-.fa-times {
-  color: #dc3545;
-}
-
 .edit,
 .delete {
   margin: 5px;
