@@ -10,6 +10,9 @@ $(document).ready(function() {
   };
   firebase.initializeApp(config);
 
+  // Create a variable to reference the database
+  var database = firebase.database();
+
   // fetch employees data
   var getEmployees = function() {
     firebase
@@ -44,7 +47,7 @@ $(document).ready(function() {
           });
         },
         function(errorObject) {
-          showNotifications(errorObject.code, 'danger');
+          showNotification(errorObject.code, 'danger');
         }
       );
   };
@@ -74,8 +77,7 @@ $(document).ready(function() {
       total_bill: totalBill
     };
 
-    firebase
-      .database()
+    database
       .ref('/employee/new')
       .push(newEmployee)
       .then(function() {
@@ -153,8 +155,7 @@ $(document).ready(function() {
         total_bill: totalBill
       };
 
-      firebase
-        .database()
+      database
         .ref('/employee/new')
         .child(employeeId)
         .update(updatedEmployee)
@@ -179,8 +180,7 @@ $(document).ready(function() {
       .parents('tr')
       .attr('id');
 
-    firebase
-      .database()
+    database
       .ref('/employee/new')
       .child(id)
       .remove()
