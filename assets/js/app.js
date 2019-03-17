@@ -15,7 +15,7 @@ $(document).ready(function() {
 
   // fetch employees data
   var getEmployees = function() {
-    database.ref('/employees/').on(
+    database.ref('/employees').on(
       'value',
       function(snapshot) {
         $('.employee-table tbody').empty();
