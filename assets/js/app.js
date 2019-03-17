@@ -15,41 +15,40 @@ $(document).ready(function() {
 
   // fetch employees data
   var getEmployees = function() {
-    firebase
-      .database()
-      .ref('/employee/')
-      .on(
-        'value',
-        function(snapshot) {
-          $('.employee-table tbody').empty();
+    database.ref('/employees/').on(
+      'value',
+      function(snapshot) {
+        $('.employee-table tbody').empty();
 
-          $.each(snapshot.val().new, function(i, value) {
-            var markup =
-              '<tr id="' +
-              i +
-              '"><td class="hidden">' +
-              i +
-              '</td><td>' +
-              value.name +
-              '</td><td>' +
-              value.role +
-              '</td><td>' +
-              value.start_date +
-              '</td><td>' +
-              value.months_worked +
-              '</td><td>' +
-              value.rate +
-              '</td><td>' +
-              value.total_bill +
-              '</td><td><button class="btn btn-danger btn-xs delete" data-title="Delete"><i class="far fa-trash-alt"></i></button><button class="btn btn-primary btn-xs edit" data-title="Edit"><i class="far fa-edit"></i></button></td></tr>';
+        $.each(snapshot.val(), function(i, value) {
+          var markup =
+            '<tr><td class="hidden">' +
+            i +
+            '</td><td>' +
+            value.name +
+            '</td><td>' +
+            value.role +
+            '</td><td>' +
+            value.start_date +
+            '</td><td>' +
+            value.months_worked +
+            '</td><td>' +
+            value.rate +
+            '</td><td>' +
+            value.total_bill +
+            '</td><td><button class="btn btn-danger btn-xs delete" data-key="' +
+            i +
+            '" data-title="Delete"><i class="far fa-trash-alt"></i></button><button class="btn btn-primary btn-xs edit" data-key="' +
+            i +
+            '" data-title="Edit"><i class="far fa-edit"></i></button></td></tr>';
 
-            $('.employee-table tbody').append(markup);
-          });
-        },
-        function(errorObject) {
-          showNotification(errorObject.code, 'danger');
-        }
-      );
+          $('.employee-table tbody').append(markup);
+        });
+      },
+      function(errorObject) {
+        showNotification(errorObject.code, 'danger');
+      }
+    );
   };
 
   getEmployees();
@@ -78,7 +77,7 @@ $(document).ready(function() {
     };
 
     database
-      .ref('/employee/new')
+      .ref('/employees')
       .push(newEmployee)
       .then(function() {
         $('#addEmployeeModal').modal('toggle');
@@ -156,7 +155,7 @@ $(document).ready(function() {
       };
 
       database
-        .ref('/employee/new')
+        .ref('/employees')
         .child(employeeId)
         .update(updatedEmployee)
         .then(function() {
@@ -176,12 +175,10 @@ $(document).ready(function() {
 
   // delete employee
   $(document).on('click', '.delete', function() {
-    var id = $(this)
-      .parents('tr')
-      .attr('id');
+    var id = $(this).attr('data-key');
 
     database
-      .ref('/employee/new')
+      .ref('/employees')
       .child(id)
       .remove()
       .then(function() {

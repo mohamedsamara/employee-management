@@ -6,7 +6,7 @@ Employee data management application, fetch and send employee data from and to f
 
 ## Firebase Guidelines
 
-Create employee table & add the fields below
+Create employees table & add the fields below
 
 ```
 months_worked -> Number
