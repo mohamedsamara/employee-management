@@ -11,7 +11,7 @@ Create employees table & add the fields below
 ```
 months_worked -> Number
 name -> String
-rate -> String
+rate -> Number
 role -> String
 start_date -> String
 total_bill -> Number
