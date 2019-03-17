@@ -57,10 +57,18 @@ $(document).ready(function() {
   $('#add-employee').on('submit', function(e) {
     e.preventDefault();
 
-    var name = $('#employeeName').val();
-    var role = $('#role').val();
-    var date = $('#startDate').val();
-    var rate = $('#rate').val();
+    var name = $('#employeeName')
+      .val()
+      .trim();
+    var role = $('#role')
+      .val()
+      .trim();
+    var date = $('#startDate')
+      .val()
+      .trim();
+    var rate = $('#rate')
+      .val()
+      .trim();
     var formattedDate = new Date(date);
     var timeNow = new Date();
     var monthsWorked = getMonthsDifference(formattedDate, timeNow);
@@ -133,10 +141,18 @@ $(document).ready(function() {
       e.preventDefault();
       e.stopImmediatePropagation();
 
-      var name = $('#editEmployeeName').val();
-      var role = $('#editRole').val();
-      var date = $('#editStartDate').val();
-      var rate = $('#editRate').val();
+      var name = $('#editEmployeeName')
+        .val()
+        .trim();
+      var role = $('#editRole')
+        .val()
+        .trim();
+      var date = $('#editStartDate')
+        .val()
+        .trim();
+      var rate = $('#editRate')
+        .val()
+        .trim();
       var formattedDate = new Date(date);
       var timeNow = new Date();
       var monthsWorked = getMonthsDifference(formattedDate, timeNow);
