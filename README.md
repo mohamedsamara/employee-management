@@ -15,7 +15,6 @@ rate -> Number
 role -> String
 start_date -> String
 total_bill -> Number
-
 ```
 
 ## Languages & tools
